@@ -34,6 +34,7 @@ const App = () => {
         setNewLanguage(event.target.value)
     }
 
+    // handler to set new population
     const handleNewPopulation = (event) => {
         setNewPopulation(event.target.value)
     }
@@ -61,10 +62,48 @@ const App = () => {
         event.currentTarget.reset()
     }
 
+    // this is the handler for the delete button
+    const handleDelete = (destinationData) => {
+        axios
+            .delete(`http://localhost:3000/destinations/${destinationData._id}`)
+            .then(() => {
+                axios
+                    .get('http://localhost:3000/destinations')
+                    .then((response) => {
+                        setNewDestinations(response.data)
+                    })
+            })
+    }
+
+    // this is the handler for edit form
+    const handleEdit = (destinationData) => {
+        axios
+            .put(`http://localhost:3000/destinations/${destinationData._id}`,
+                {
+                    location: destinationData.location,
+                    image: destinationData.image,
+                    language: destinationData.language,
+                    population: destinationData.population
+                }
+            )
+            .then(() => {
+                axios
+                    .get('http://localhost:3000/destinations')
+                    .then((response) => {
+                        setNewDestinations(response.data)
+                    })
+            })
+    }
+
+
+
+// rendering to the browser
+//////////////////////////////
     return (
         <main>
             <h1>Destinations</h1>
             <section>
+                <h2>Create a Destination</h2>
                 <form onSubmit={ handleNewDestinationsSubmit }>
                     Image: <input type="text" onChange={ handleNewImage } /><br/>
                     Location: <input type="text" onChange={ handleNewLocation } /><br/>
@@ -72,6 +111,32 @@ const App = () => {
                     Population: <input type="text" onChange={ handleNewPopulation } /><br/>
                     <input type="submit" value='Create New Destination' />
                 </form>
+            </section>
+
+            <section>
+                <h2>Destination List</h2>
+                <ul>
+                    {
+                        destinations.map((destination) => {
+                            return <li>
+                                {
+                                    <>Location: {destination.location}</>
+                                }<br/>
+                                {
+                                    <>Image: {destination.image}</>
+                                }<br/>
+                                {
+                                    <>Language Spoken: {destination.languagen}</>
+                                }<br/>
+                                {
+                                    <img src={destination.image}>
+                                }<br/>
+                                <button onClick={ (event) => {handleEdit(destination) } }>Edit</button>
+                                <button onClick={ (event) => {handleDelete(destination) } }>Delete</button>
+                            </li>
+                        })
+                    }
+                </ul>
             </section>
         </main>
     )
