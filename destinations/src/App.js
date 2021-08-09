@@ -3,6 +3,11 @@ import './App.css';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Card from 'react-bootstrap/Card'
+import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
+
 const App = () => {
     const [newImage, setNewImage] = useState('')
     const [newLocation, setNewLocation] = useState('')
@@ -76,19 +81,20 @@ const App = () => {
     }
 
     // this is the handler for edit form
-    const handleEdit = (destinationData) => {
+    const handleEdit = (event, destinationData) => {
+        event.preventDefault()
         axios
             .put(`http://localhost:3000/destinations/${destinationData._id}`,
                 {
-                    location: destinationData.location,
-                    image: destinationData.image,
-                    language: destinationData.language,
-                    population: destinationData.population
+                    location: newLocation,
+                    image: newImage,
+                    language: newLanguage,
+                    population: newPopulation
                 }
             )
             .then(() => {
                 axios
-                    .get('http://localhost:3000/destinations')
+                    .get("http://localhost:3000/destinations")
                     .then((response) => {
                         setNewDestinations(response.data)
                     })
@@ -101,13 +107,15 @@ const App = () => {
 //////////////////////////////
     return (
         <main>
+
+
             <h1>Destinations</h1>
             <section>
                 <details>
                 <summary>New Destination</summary>
                     <form onSubmit={ handleNewDestinationsSubmit }>
-                        Image: <input type="text" onChange={ handleNewImage } /><br/>
                         Location: <input type="text" onChange={ handleNewLocation } /><br/>
+                        Image: <input type="text" onChange={ handleNewImage } /><br/>
                         Language: <input type="text" onChange={ handleNewLanguage } /><br/>
                         Population: <input type="text" onChange={ handleNewPopulation } /><br/>
                         <input type="submit" value='Create New Destination' />
@@ -116,29 +124,41 @@ const App = () => {
             </section>
 
             <section>
-                <h2>Destination List</h2>
-                <ul>
+                <h2>Destinations</h2>
+                <>
                     {
                         newDestinations.map((destination) => {
-                            return <li>
+                            return <>
+                                {
+                                    <>Image: <img src={destination.image} /> </>
+                                }<br/>
                                 {
                                     <>Location: {destination.location}</>
                                 }<br/>
                                 {
-                                    <>Image: {destination.image}</>
+                                    <>Language Spoken: {destination.language}</>
                                 }<br/>
                                 {
-                                    <>Language Spoken: {destination.languagen}</>
+                                    <>Population: {destination.population}</>
                                 }<br/>
-                                {
-                                    <img src={destination.image} />
-                                }<br/>
-                                <button onClick={ (event) => {handleEdit(destination) } }>Edit</button>
+
+                                <details>
+                                    <summary>Edit Destination</summary>
+                                        <form onSubmit={ (event) => { handleEdit (event, destination)} } >
+                                            Location: <input type="text" onChange={ handleNewLocation } /> <br/>
+                                            Image: <input type="text" onChange={ handleNewImage } /> <br/>
+                                            Language: <input type="text" onChange={ handleNewLanguage } /> <br/>
+                                            Population: <input type="text" onChange={ handleNewPopulation } /> <br/>
+                                            <input type="submit" value='Update Destination' />
+                                        </form>
+                                </details>
+
                                 <button onClick={ (event) => {handleDelete(destination) } }>Delete</button>
-                            </li>
+
+                            </>
                         })
                     }
-                </ul>
+                </>
             </section>
         </main>
     )
