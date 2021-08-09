@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
+import Auth from './components/Auth'
 
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
@@ -109,6 +110,7 @@ const App = () => {
 //////////////////////////////
     return (
         <main>
+            <Auth />
             <Container>
 
                 <section>
