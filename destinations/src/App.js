@@ -3,10 +3,12 @@ import './App.css';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
+import Card from 'react-bootstrap/Card'
+import Carousel from 'react-bootstrap/Carousel'
+
+
 
 const App = () => {
     const [newImage, setNewImage] = useState('')
@@ -107,59 +109,73 @@ const App = () => {
 //////////////////////////////
     return (
         <main>
+            <Container>
+
+                <section>
+                <h1>Destinations</h1>
+                    <details>
+                    <summary>New Destination</summary>
+                        <form onSubmit={ handleNewDestinationsSubmit }>
+                            Location: <input type="text" onChange={ handleNewLocation } /><br/>
+                            Image: <input type="text" onChange={ handleNewImage } /><br/>
+                            Language: <input type="text" onChange={ handleNewLanguage } /><br/>
+                            Population: <input type="text" onChange={ handleNewPopulation } /><br/>
+                            <input type="submit" value='Create New Destination' />
+                        </form>
+                    </details>
+                </section>
+
+                <section>
+                    <h2>Destinations</h2>
+                    <>
+
+                        {
+                            newDestinations.map((destination) => {
+                                return <>
+                                    <Card>
+                                        <Card.Img varient='top' />
+                                            <Carousel>
+                                                <Carousel.Item>
+                                                    <img src={destination.image} />
+                                                </Carousel.Item>
+                                                <Carousel.Item>
+                                                    <img src={destination.image} />
+                                                </Carousel.Item>
+                                                <Carousel.Item>
+                                                    <img src={destination.image} />
+                                                </Carousel.Item>
+                                            </Carousel>
+
+                                        <Card.Body>
+                                            <Card.Title>{destination.location}</Card.Title>
+                                            <Card.Text>
+                                                Language Spoken: {destination.language}<br/>
+                                                Population: {destination.population}
+                                            </Card.Text>
+                                        </Card.Body>
 
 
-            <h1>Destinations</h1>
-            <section>
-                <details>
-                <summary>New Destination</summary>
-                    <form onSubmit={ handleNewDestinationsSubmit }>
-                        Location: <input type="text" onChange={ handleNewLocation } /><br/>
-                        Image: <input type="text" onChange={ handleNewImage } /><br/>
-                        Language: <input type="text" onChange={ handleNewLanguage } /><br/>
-                        Population: <input type="text" onChange={ handleNewPopulation } /><br/>
-                        <input type="submit" value='Create New Destination' />
-                    </form>
-                </details>
-            </section>
 
-            <section>
-                <h2>Destinations</h2>
-                <>
-                    {
-                        newDestinations.map((destination) => {
-                            return <>
-                                {
-                                    <>Image: <img src={destination.image} /> </>
-                                }<br/>
-                                {
-                                    <>Location: {destination.location}</>
-                                }<br/>
-                                {
-                                    <>Language Spoken: {destination.language}</>
-                                }<br/>
-                                {
-                                    <>Population: {destination.population}</>
-                                }<br/>
+                                        <details>
+                                            <summary>Edit Destination</summary>
+                                                <form onSubmit={ (event) => { handleEdit (event, destination)} } >
+                                                    Location: <input type="text" onChange={ handleNewLocation } /> <br/>
+                                                    Image: <input type="text" onChange={ handleNewImage } /> <br/>
+                                                    Language: <input type="text" onChange={ handleNewLanguage } /> <br/>
+                                                    Population: <input type="text" onChange={ handleNewPopulation } /> <br/>
+                                                    <input class='btn btn-info' type="submit" value='Update Destination' />
+                                                </form>
+                                        </details>
 
-                                <details>
-                                    <summary>Edit Destination</summary>
-                                        <form onSubmit={ (event) => { handleEdit (event, destination)} } >
-                                            Location: <input type="text" onChange={ handleNewLocation } /> <br/>
-                                            Image: <input type="text" onChange={ handleNewImage } /> <br/>
-                                            Language: <input type="text" onChange={ handleNewLanguage } /> <br/>
-                                            Population: <input type="text" onChange={ handleNewPopulation } /> <br/>
-                                            <input type="submit" value='Update Destination' />
-                                        </form>
-                                </details>
+                                        <Button class='btn btn-danger' onClick={ (event) => {handleDelete(destination) } }>Delete</Button>
+                                    </Card>
+                                </>
+                            })
+                        }
+                    </>
+                </section>
 
-                                <button onClick={ (event) => {handleDelete(destination) } }>Delete</button>
-
-                            </>
-                        })
-                    }
-                </>
-            </section>
+            </Container>
         </main>
     )
 }
