@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import '../App.css'
 
-const NewUserForm = (props) => {
+const App = (props) => {
     // useStates for the new user
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -36,4 +36,4 @@ const NewUserForm = (props) => {
     )
 }
 
-export default NewUserForm;
+export default App;
