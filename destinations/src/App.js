@@ -103,21 +103,23 @@ const App = () => {
         <main>
             <h1>Destinations</h1>
             <section>
-                <h2>Create a Destination</h2>
-                <form onSubmit={ handleNewDestinationsSubmit }>
-                    Image: <input type="text" onChange={ handleNewImage } /><br/>
-                    Location: <input type="text" onChange={ handleNewLocation } /><br/>
-                    Language: <input type="text" onChange={ handleNewLanguage } /><br/>
-                    Population: <input type="text" onChange={ handleNewPopulation } /><br/>
-                    <input type="submit" value='Create New Destination' />
-                </form>
+                <details>
+                <summary>New Destination</summary>
+                    <form onSubmit={ handleNewDestinationsSubmit }>
+                        Image: <input type="text" onChange={ handleNewImage } /><br/>
+                        Location: <input type="text" onChange={ handleNewLocation } /><br/>
+                        Language: <input type="text" onChange={ handleNewLanguage } /><br/>
+                        Population: <input type="text" onChange={ handleNewPopulation } /><br/>
+                        <input type="submit" value='Create New Destination' />
+                    </form>
+                </details>
             </section>
 
             <section>
                 <h2>Destination List</h2>
                 <ul>
                     {
-                        destinations.map((destination) => {
+                        newDestinations.map((destination) => {
                             return <li>
                                 {
                                     <>Location: {destination.location}</>
@@ -129,7 +131,7 @@ const App = () => {
                                     <>Language Spoken: {destination.languagen}</>
                                 }<br/>
                                 {
-                                    <img src={destination.image}>
+                                    <img src={destination.image} />
                                 }<br/>
                                 <button onClick={ (event) => {handleEdit(destination) } }>Edit</button>
                                 <button onClick={ (event) => {handleDelete(destination) } }>Delete</button>
