@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
+import Auth from './components/Auth'
 
 const App = () => {
     const [newImage, setNewImage] = useState('')
@@ -102,6 +103,7 @@ const App = () => {
     return (
         <main>
             <h1>Destinations</h1>
+            <Auth />
             <section>
                 <details>
                 <summary>New Destination</summary>
