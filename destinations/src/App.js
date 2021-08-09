@@ -110,6 +110,7 @@ const App = () => {
 //////////////////////////////
     return (
         <main>
+            <Auth />
             <Container>
 
                 <section>
