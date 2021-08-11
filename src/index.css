@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #636363;
 }
 
 code {
@@ -12,6 +13,6 @@ code {
     monospace;
 }
 
-
-/* importing react bootstrap */
-/* import Button from 'react-bootstrap/Button' */
+main {
+    background-color: #404040;
+}
