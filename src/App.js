@@ -4,7 +4,6 @@ import {useState, useEffect} from 'react'
 import axios from 'axios'
 import Auth from './components/Auth'
 
-
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
@@ -110,7 +109,6 @@ const App = () => {
 // rendering to the browser
 //////////////////////////////
     return (
-
         <main>
             <Auth />
             <Container>
@@ -178,9 +176,9 @@ const App = () => {
                         }
                     </>
                 </section>
+
             </Container>
         </main>
-
     )
 }
 
