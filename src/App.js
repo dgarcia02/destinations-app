@@ -116,6 +116,7 @@ const App = () => {
             <Container>
 
                 <section>
+                <h1>hello is this even working?</h1>
                 <h1>Destinations</h1>
                     <details>
                     <summary>New Destination</summary>
